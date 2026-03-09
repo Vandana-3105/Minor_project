@@ -14,7 +14,7 @@ VALID_STATUSES = {"Scheduled", "In Progress", "Completed", "Cancelled"}
 
 
 def _make_doctor_token(doctor_id: str) -> str:
-    return serializer.dumps({" doctor_id": doctor_id, "role": "doctor"})
+    return serializer.dumps({"id": doctor_id, "role": "doctor"})
 
 
 def _get_doctor_from_token():
@@ -26,7 +26,11 @@ def _get_doctor_from_token():
         data = serializer.loads(token, max_age=TOKEN_MAX_AGE)
         if data.get("role") != "doctor":
             return None, "Invalid role"
-        return data["id"], None
+        # Support both correct key "id" and old typo key " doctor_id"
+        doctor_id = data.get("id") or data.get(" doctor_id")
+        if not doctor_id:
+            return None, "Invalid token payload"
+        return doctor_id, None
     except (SignatureExpired, BadSignature):
         return None, "Invalid or expired token"
 
