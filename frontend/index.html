@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Healthcare Portal – Select Role</title>
+  <meta name="description" content="Role-based healthcare portal – choose your role to continue."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body class="role-page">
+  <!-- Decorative background blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div class="role-container">
+    <div class="role-header">
+      <div class="logo">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="12" fill="#2563EB"/>
+          <path d="M20 8v24M8 20h24" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1>HealthCare Portal</h1>
+      <p class="role-subtitle">Aadhaar Linked Emergency Health Access System</p>
+    </div>
+
+    <h2 class="role-question">Who are you?</h2>
+    <p class="role-desc">Please select your role to continue to the appropriate portal.</p>
+
+    <div class="role-cards">
+      <!-- Patient Card -->
+      <a href="patient_login.html" class="role-card" id="patient-card">
+        <div class="role-card-icon patient-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="16" r="9" stroke="#2563EB" stroke-width="2.5"/>
+            <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Patient</h3>
+        <p>Access your health records, schedule medical tests, and manage your profile.</p>
+        <span class="role-card-btn">Continue as Patient →</span>
+      </a>
+
+      <!-- Doctor Card -->
+      <a href="doctor_login.html" class="role-card" id="doctor-card">
+        <div class="role-card-icon doctor-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="14" r="8" stroke="#0891B2" stroke-width="2.5"/>
+            <path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#0891B2" stroke-width="2.5" stroke-linecap="round"/>
+            <rect x="30" y="30" width="14" height="14" rx="7" fill="#0891B2" opacity="0.15"/>
+            <path d="M37 33v8M33 37h8" stroke="#0891B2" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Doctor</h3>
+        <p>Search patient records by Aadhaar, review health data, and manage test statuses.</p>
+        <span class="role-card-btn doctor-btn">Continue as Doctor →</span>
+      </a>
+    </div>
+
+    <p class="role-footer">
+      Secure &amp; confidential. All data is protected under healthcare privacy regulations.
+    </p>
+  </div>
+</body>
+</html>

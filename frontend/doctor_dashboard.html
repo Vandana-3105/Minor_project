@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Dashboard – Healthcare Portal</title>
+    <meta name="description" content="Doctor dashboard to search patients and manage test statuses." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body class="dashboard-page doctor-theme">
+
+    <!-- ── SIDEBAR ─────────────────────────────────────────── -->
+    <aside class="sidebar sidebar-teal" id="sidebar">
+        <div class="sidebar-logo">
+            <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+                <rect width="40" height="40" rx="10" fill="#0891B2" />
+                <path d="M20 8v24M8 20h24" stroke="#fff" stroke-width="4" stroke-linecap="round" />
+            </svg>
+            <span>HealthCare</span>
+        </div>
+
+        <div class="sidebar-user">
+            <div class="avatar-circle teal-avatar" id="user-avatar">D</div>
+            <div>
+                <div class="sidebar-user-name" id="sidebar-name">Loading…</div>
+                <div class="sidebar-user-role" id="sidebar-dept">Doctor</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-section="search" id="nav-search">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                Patient Search
+            </button>
+            <button class="nav-item" data-section="tests" id="nav-tests">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+                Test Management
+            </button>
+        </nav>
+
+        <button class="sidebar-logout" id="doctor-logout">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Logout
+        </button>
+    </aside>
+
+    <!-- Mobile menu button -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+    </button>
+
+    <!-- ── MAIN CONTENT ───────────────────────────────────── -->
+    <main class="dashboard-main" id="dashboard-main">
+
+        <!-- Header bar -->
+        <header class="dash-header">
+            <div>
+                <h1 class="dash-title" id="section-title">Patient Search</h1>
+                <p class="dash-breadcrumb">Doctor Dashboard</p>
+            </div>
+            <div class="dash-header-right">
+                <div class="header-badge doctor-badge">Doctor Portal</div>
+            </div>
+        </header>
+
+        <div id="alert-box" class="alert hidden"></div>
+
+        <!-- ── SECTION: Patient Search ───────────────────────── -->
+        <section class="section active" id="section-search">
+            <div class="section-intro">
+                <h2>Search Patient by Aadhaar</h2>
+                <p>Enter the patient's Aadhaar number to retrieve their full health record.</p>
+            </div>
+
+            <div class="card search-card">
+                <form id="search-form" novalidate>
+                    <div class="search-bar-row">
+                        <div class="form-group no-margin flex-1">
+                            <label for="search-aadhar">Patient Aadhaar Number</label>
+                            <input type="text" id="search-aadhar" placeholder="12-digit Aadhaar number" maxlength="12"
+                                required />
+                        </div>
+                        <button type="submit" class="btn btn-doctor search-btn" id="search-btn">
+                            <span id="search-btn-text">Search</span>
+                            <span id="search-spinner" class="spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Patient Result -->
+            <div id="patient-result" class="hidden">
+
+                <!-- Patient Summary Card -->
+                <div class="card patient-result-card">
+                    <div class="result-header">
+                        <div class="result-avatar" id="result-avatar">P</div>
+                        <div>
+                            <div class="result-name" id="result-name">–</div>
+                            <div class="result-sub" id="result-sub">–</div>
+                        </div>
+                        <div class="result-aadhar-badge" id="result-aadhar-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="4" width="18" height="16" rx="2" />
+                                <path d="M3 10h18" />
+                            </svg>
+                            Aadhaar Verified
+                        </div>
+                    </div>
+
+                    <div class="tabs" id="patient-tabs">
+                        <button class="tab active" data-tab="personal">Personal Info</button>
+                        <button class="tab" data-tab="health-info">Health Info</button>
+                        <button class="tab" data-tab="emergency">Emergency Contact</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-personal">
+                        <div class="info-grid" id="result-personal-grid"><!-- JS --></div>
+                    </div>
+                    <div class="tab-content hidden" id="tab-health-info">
+                        <div class="cards-grid mini">
+                            <div class="info-card card">
+                                <div class="info-card-icon blood-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626"
+                                        stroke-width="2">
+                                        <path d="M12 2L5 12a7 7 0 1 0 14 0L12 2z" />
+                                    </svg>
+                                </div>
+                                <div class="info-card-label">Blood Group</div>
+                                <div class="info-card-value" id="r-blood">–</div>
+                            </div>
+                            <div class="card health-detail-card">
+                                <h3>Allergies</h3>
+                                <p id="r-allergies">–</p>
+                            </div>
+                            <div class="card health-detail-card">
+                                <h3>Medical Conditions</h3>
+                                <p id="r-conditions">–</p>
+                            </div>
+                            <div class="card health-detail-card">
+                                <h3>Medications</h3>
+                                <p id="r-medications">–</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content hidden" id="tab-emergency">
+                        <div class="info-grid compact" id="result-emergency-grid"><!-- JS --></div>
+                    </div>
+                </div>
+
+                <!-- Patient's Tests Card -->
+                <div class="card mt-4">
+                    <h3>Scheduled Tests</h3>
+                    <div class="table-wrap">
+                        <table class="data-table" id="patient-tests-table">
+                            <thead>
+                                <tr>
+                                    <th>Test Type</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Notes</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patient-tests-tbody">
+                                <tr>
+                                    <td colspan="6" class="table-empty">No tests found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SECTION: Test Management ─────────────────────── -->
+        <section class="section hidden" id="section-tests">
+            <div class="section-intro">
+                <h2>Test Management</h2>
+                <p>View all scheduled tests and update their status.</p>
+            </div>
+
+            <div class="card">
+                <div class="table-toolbar">
+                    <input type="text" id="tests-search" placeholder="Search tests…" class="table-search" />
+                    <select id="status-filter" class="table-filter">
+                        <option value="">All Statuses</option>
+                        <option>Scheduled</option>
+                        <option>In Progress</option>
+                        <option>Completed</option>
+                        <option>Cancelled</option>
+                    </select>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table" id="all-tests-table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Test Type</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-tests-tbody">
+                            <tr>
+                                <td colspan="6" class="table-empty">Loading…</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Update Status Modal -->
+    <div class="modal-overlay hidden" id="update-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Update Test Status</h3>
+                <button class="modal-close" id="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Test: <strong id="modal-test-name">–</strong></p>
+                <div class="form-group">
+                    <label for="status-select">New Status</label>
+                    <select id="status-select">
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="modal-cancel-btn">Cancel</button>
+                <button class="btn btn-doctor" id="modal-confirm-btn">Update Status</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        initDoctorDashboard();
+    </script>
+</body>
+
+</html>
